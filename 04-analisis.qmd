@@ -62,7 +62,12 @@ decimales <- function(x) {
 theme_set(theme_bw())
 
 ```
+
 ```{r, alluvial-justed, echo=FALSE}
+#Data without labels
+
+db_proc_2 <- db_proc
+
 # Data preparation
 db_proc <- db_proc %>% filter(!is.na(just_educ) & !is.na(wave))
 db_proc$just_educ <- factor(db_proc$just_educ, labels= c("Strongly disagree", "Disagree", "Agree", "Strongly agree"))
@@ -802,3 +807,104 @@ plot_sctl <- sctl %>%
 
 plot_sctl
 ```
+
+```{r}
+
+db_proc_long <- db_proc_2 %>%
+  pivot_longer(cols = c(just_educ, just_pension, just_health), 
+               names_to = "Variable", values_to = "Valor")
+
+# Graph perc_effort
+plot_perc_effort <- ggplot(db_proc_long, aes(x = perc_effort, y = Valor, shape = Variable, color = Variable)) +
+  stat_summary(fun = mean, geom = "point", size = 3, alpha = 0.8) +
+  scale_x_continuous(breaks = 1:4, 
+                     labels = c("Strongly\n disagree", "Disagree", "Agree", "Strongly\n agree")) +
+  scale_y_continuous(limits = c(min(db_proc_long$Valor), max(db_proc_long$Valor))) +
+  scale_color_brewer(palette = "Paired") +
+  labs(x = "Effort Perception", 
+       y = "Market Justice Preference",
+       shape = "Component",
+       color = "Component") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        text = element_text(size = 11))
+
+plot_perc_effort
+```
+
+```{r}
+# Graph perc_talent
+plot_perc_talent <- ggplot(db_proc_long, aes(x = perc_talent, y = Valor, shape = Variable, color = Variable)) +
+  stat_summary(fun = mean, geom = "point", size = 3, alpha = 0.8) +
+  scale_x_continuous(breaks = 1:4, 
+                     labels = c("Strongly\n disagree", "Disagree", "Agree", "Strongly\n agree")) +
+  scale_y_continuous(limits = c(min(db_proc_long$Valor), max(db_proc_long$Valor))) +
+  scale_color_brewer(palette = "Paired") +
+  labs(x = "Talent Perception", 
+       y = "Market Justice Preference",
+       shape = "Component",
+       color = "Component") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        text = element_text(size = 11))
+
+plot_perc_talent
+```
+
+```{r}
+# Graph perc_rich_parents
+plot_perc_rich_parents <- ggplot(db_proc_long, aes(x = perc_rich_parents, y = Valor, shape = Variable, color = Variable)) +
+  stat_summary(fun = mean, geom = "point", size = 3, alpha = 0.8) +
+  scale_x_continuous(breaks = 1:4, 
+                     labels = c("Strongly\n disagree", "Disagree", "Agree", "Strongly\n agree")) +
+  scale_y_continuous(limits = c(min(db_proc_long$Valor), max(db_proc_long$Valor))) +
+  scale_color_brewer(palette = "Paired") +
+  labs(x = "Rich Parents Perception", 
+       y = "Market Justice Preference",
+       shape = "Component",
+       color = "Component") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        text = element_text(size = 11))
+
+plot_perc_rich_parents
+```
+
+```{r}
+# Graph perc_contacts
+plot_perc_contacts <- ggplot(db_proc_long, aes(x = perc_contact, y = Valor, shape = Variable, color = Variable)) +
+  stat_summary(fun = mean, geom = "point", size = 3, alpha = 0.8) +
+  scale_x_continuous(breaks = 1:4, 
+                     labels = c("Strongly\n disagree", "Disagree", "Agree", "Strongly\n agree")) +
+  scale_y_continuous(limits = c(min(db_proc_long$Valor), max(db_proc_long$Valor))) +
+  scale_color_brewer(palette = "Paired") +
+  labs(x = "Contacts Perception", 
+       y = "Market Justice Preference",
+       shape = "Component",
+       color = "Component") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        text = element_text(size = 11))
+
+plot_perc_contacts
+```
+
+```{r}
+# Graph pref_effort
+plot_pref_effort <- ggplot(db_proc_long, aes(x = pref_effort, y = Valor, shape = Variable, color = Variable)) +
+  stat_summary(fun = mean, geom = "point", size = 3, alpha = 0.8) +
+  scale_x_continuous(breaks = 1:4, 
+                     labels = c("Strongly\n disagree", "Disagree", "Agree", "Strongly\n agree")) +
+  scale_y_continuous(limits = c(min(db_proc_long$Valor), max(db_proc_long$Valor))) +
+  scale_color_brewer(palette = "Paired") +
+  labs(x = "Effort Preferences", 
+       y = "Market Justice Preference",
+       shape = "Component",
+       color = "Component") +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        text = element_text(size = 11))
+
+plot_pref_effort
+```
+
